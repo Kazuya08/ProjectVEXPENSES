@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Projeto VExpenses
 
-## Getting Started
+## 🚀 Começando
 
-First, run the development server:
+Este é um projeto [Next.js](https://nextjs.org) inicializado com [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+Primeiro, execute o servidor de desenvolvimento:
 
 ```bash
 npm run dev
-# or
+# ou
 yarn dev
-# or
+# ou
 pnpm dev
-# or
+# ou
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra http://localhost:3000 no seu navegador para ver o resultado.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Você pode começar a editar a página modificando o arquivo app/page.tsx. A página será atualizada automaticamente conforme você edita o arquivo.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Este projeto usa next/font para otimizar e carregar automaticamente a fonte Geist, uma nova família de fontes da Vercel.
 
 ## Learn More
+Para aprender mais sobre o Next.js, confira os seguintes recursos:
 
-To learn more about Next.js, take a look at the following resources:
+Documentação do Next.js - aprenda sobre os recursos e APIs do Next.js.
+Learn Next.js - um tutorial interativo sobre o Next.js.
+Você pode conferir o repositório GitHub do Next.js - seus feedbacks e contribuições são bem-vindos!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy no Vercel
+A maneira mais fácil de fazer o deploy do seu aplicativo Next.js é usar a Plataforma Vercel, criada pelos desenvolvedores do Next.js.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Confira nossa documentação de deploy do Next.js para mais detalhes.
 
-## Deploy on Vercel
+## 📋 Pré-requisitos
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* [Node.js](https://nodejs.org/) - Ambiente de execução JavaScript
+* [PNPM](https://pnpm.io/) - Gerente de dependência
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ Dependências
+Este projeto usa as seguintes tecnologias e bibliotecas:
+
+* [Next.js](https://nextjs.org/) - Framework web usado
+* [React Hook Form](https://react-hook-form.com/) - Biblioteca para gerenciamento de formulários
+* [Yup](https://github.com/jquense/yup) - Biblioteca de validação de esquema para JavaScript
+* [Axios](https://axios-http.com/) - Cliente HTTP baseado em Promises
+* [JSON-Server](https://github.com/typicode/json-server) - Mock API para desenvolvimento rápido
+* [ESLint](https://eslint.org/) - Ferramenta de linting para garantir a qualidade do código
+* [Prettier](https://prettier.io/) - Formatador de código
+
+## 🔍 API ViaCEP
+
+Este projeto usa a API ViaCEP para buscar dados de endereço através do CEP. Você pode fazer uma solicitação para obter informações de endereço com base no código postal, como mostrado abaixo:
+
+```bash
+import axios from 'axios';
+
+async function fetchAddressByCEP(cep) {
+  const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+  return response.data;
+}
+
+```
+
+---
+⌨️ com ❤️ por [Thiago Kazuya](https://github.com/Kazuya08) 😊
