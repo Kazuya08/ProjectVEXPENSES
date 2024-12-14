@@ -9,7 +9,7 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen }) => {
     return (
-        <SidebarContainer isOpen={isOpen}>
+        <SidebarContainer isOpen={isOpen ? true : undefined}>
             <MenuItem>
                 <MenuIcon>
                     <LuHexagon />

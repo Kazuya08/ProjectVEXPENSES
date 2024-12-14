@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ContentWrapper } from "@/components/globals/ContentWrapper";
+import { ContentWrapper } from "@/components/globals/ContentWrapper.styles";
 import { HamburgerMenu, ItemMenu } from '@/components/globals/Header.styles';
 import { Header } from "@/components/globals/Header.styles";
 import { LayoutContainer } from "@/components/globals/LayoutContainer.styles";
@@ -26,7 +26,7 @@ export const AdminLayout = ({ children }: AdminLayoutProps) => {
       <Sidebar isOpen={sidebarOpen} />
 
       <ContentWrapper>
-        <MainContent isOpen={sidebarOpen}>
+        <MainContent isOpen={sidebarOpen ? true : undefined}>
           <Header>
             <HamburgerMenu onClick={toggleSidebar}>
               <LuMenu />

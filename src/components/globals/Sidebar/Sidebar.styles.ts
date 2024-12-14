@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 interface SidebarProps {
-  isOpen: boolean;
+  isOpen?: boolean;
 }
 
 export const SidebarContainer = styled.div<SidebarProps>`

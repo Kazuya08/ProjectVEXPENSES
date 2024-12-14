@@ -1,0 +1,198 @@
+{
+    "suppliers": [
+        {
+            "id": 1,
+            "name": "Fornecedor A",
+            "description": "Fornecedor de equipamentos",
+            "contacts": [
+                {
+                    "name": "João Silva",
+                    "phone": "11987654321"
+                },
+                {
+                    "name": "Kaio Oliveira",
+                    "phone": "21912345678"
+                }
+            ],
+            "address": {
+                "zip_code": "12345678",
+                "state": "SP",
+                "city": "São Paulo",
+                "street": "Rua das Flores",
+                "number": 123,
+                "reference": "Próximo ao mercado central"
+            }
+        },
+        {
+            "id": 2,
+            "name": "Fornecedor B",
+            "description": "Serviços de consultoria",
+            "contacts": [
+                {
+                    "name": "Matheus Silva",
+                    "phone": "31998765432"
+                }
+            ],
+            "address": {
+                "zip_code": "14094000",
+                "state": "SP",
+                "city": "Ribeirão Preto",
+                "street": "Av. Henri Nestlé",
+                "number": 100,
+                "reference": "Em frente a avenida"
+            }
+        },
+        {
+            "id": 3,
+            "name": "Fornecedor C",
+            "description": "Serviços de T.I",
+            "contacts": [
+                {
+                    "name": "Thiago Kazuya",
+                    "phone": "11959842879"
+                }
+            ],
+            "address": {
+                "zip_code": "04166003",
+                "state": "SP",
+                "city": "São Paulo",
+                "street": "Rua Padre arlindo vieira",
+                "number": 3100,
+                "reference": "Em frente ao ponto de ônibus"
+            }
+        },
+        {
+            "id": 4,
+            "name": "Fornecedor D",
+            "description": "Materiais de construção",
+            "contacts": [
+                {
+                    "name": "Ana Costa",
+                    "phone": "41987654321"
+                }
+            ],
+            "address": {
+                "zip_code": "81020330",
+                "state": "PR",
+                "city": "Curitiba",
+                "street": "Rua dos Andradas",
+                "number": 45,
+                "reference": "Ao lado da padaria"
+            }
+        },
+        {
+            "id": 5,
+            "name": "Fornecedor E",
+            "description": "Produtos alimentícios",
+            "contacts": [
+                {
+                    "name": "Bruno Santos",
+                    "phone": "21984567321"
+                }
+            ],
+            "address": {
+                "zip_code": "20040002",
+                "state": "RJ",
+                "city": "Rio de Janeiro",
+                "street": "Rua do Ouvidor",
+                "number": 123,
+                "reference": "Próximo à igreja"
+            }
+        },
+        {
+            "id": 6,
+            "name": "Fornecedor F",
+            "description": "Equipamentos de segurança",
+            "contacts": [
+                {
+                    "name": "Carlos Oliveira",
+                    "phone": "51998765432"
+                }
+            ],
+            "address": {
+                "zip_code": "90110000",
+                "state": "RS",
+                "city": "Porto Alegre",
+                "street": "Av. Independência",
+                "number": 789,
+                "reference": "Perto do hospital central"
+            }
+        },
+        {
+            "id": 7,
+            "name": "Fornecedor G",
+            "description": "Produtos de limpeza",
+            "contacts": [
+                {
+                    "name": "Patrícia Lima",
+                    "phone": "11966554433"
+                }
+            ],
+            "address": {
+                "zip_code": "05888000",
+                "state": "SP",
+                "city": "São Paulo",
+                "street": "Rua Itapecerica",
+                "number": 567,
+                "reference": "Próximo ao metrô"
+            }
+        },
+        {
+            "id": 8,
+            "name": "Fornecedor H",
+            "description": "Peças automotivas",
+            "contacts": [
+                {
+                    "name": "Marcelo Costa",
+                    "phone": "31988776655"
+                }
+            ],
+            "address": {
+                "zip_code": "30140071",
+                "state": "MG",
+                "city": "Belo Horizonte",
+                "street": "Av. Amazonas",
+                "number": 456,
+                "reference": "Em frente ao shopping"
+            }
+        },
+        {
+            "id": 9,
+            "name": "Fornecedor I",
+            "description": "Serviços elétricos",
+            "contacts": [
+                {
+                    "name": "Rafael Souza",
+                    "phone": "11999998888"
+                }
+            ],
+            "address": {
+                "zip_code": "04696002",
+                "state": "SP",
+                "city": "São Paulo",
+                "street": "Av. Washington Luís",
+                "number": 1000,
+                "reference": "Próximo ao aeroporto"
+            }
+        },
+        {
+            "id": 10,
+            "name": "Fornecedor J",
+            "description": "Serviços de logística",
+            "contacts": [
+                {
+                    "name": "Fernando Almeida",
+                    "phone": "61988776655"
+                }
+            ],
+            "address": {
+                "zip_code": "70740700",
+                "state": "DF",
+                "city": "Brasília",
+                "street": "Setor Comercial Norte",
+                "number": 203,
+                "reference": "Ao lado do banco central"
+            }
+        }
+    ]
+}
