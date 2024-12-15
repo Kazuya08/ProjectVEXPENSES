@@ -9,6 +9,10 @@ export const TableWrapper = styled.div`
   border-radius: 8px;
   overflow-x: auto;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    min-width: 100%;
+  }
 `;
 
 export const Table = styled.table`
@@ -30,8 +34,35 @@ export const Table = styled.table`
   }
 
   @media (max-width: 768px) {
-    th, td {
-      padding: 10px;
+    th,
+    td {
+      padding: 8px 10px;
+    }
+
+    tr {
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    td {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding-left: 10px;
+      position: relative;
+      border-bottom: none; /* Remove the bottom border to avoid cluttering */
+    }
+
+    td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+    
+    td:first-child {
+      padding-top: 30px; /* Adds spacing to the first column when it's used as a label */
     }
   }
 `;
@@ -41,11 +72,15 @@ export const PaginationWrapper = styled.div`
   justify-content: center;
   padding: 10px;
   margin-top: 10px;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
 `;
 
 export const PaginationNumberButton = styled.button.withConfig({
   shouldForwardProp: (prop) => prop !== "isActive",
-}) <{ isActive?: boolean }>`
+}) <{ isActive?: boolean }>`  
     background-color: ${({ isActive, theme }) =>
     isActive ? theme.colors.darkBlue : "transparent"};
     color: ${({ isActive, theme }) => (isActive ? "white" : theme.colors.darkBlue)};
@@ -54,15 +89,19 @@ export const PaginationNumberButton = styled.button.withConfig({
     padding: 8px 12px;
     margin: 0 4px;
     cursor: pointer;
-  
+
     &:hover {
       background-color: ${({ theme }) => theme.colors.darkBlue};
       color: white;
     }
-  `;
+
+    @media (max-width: 768px) {
+      padding: 6px 10px;
+    }
+`;
 
 export const PaginationButton = styled.button`
-  background-color: 'transparent';
+  background-color: transparent;
   color: ${({ theme }) => theme.colors.darkBlue};
   border: ${({ theme }) => `${theme.colors.darkBlue} 1px solid`};
   border-radius: 4px;
@@ -71,8 +110,12 @@ export const PaginationButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.darkBlue};;
+    background-color: ${({ theme }) => theme.colors.darkBlue};
     color: white;
+  }
+
+  @media (max-width: 768px) {
+    padding: 6px 10px;
   }
 `;
 
@@ -86,6 +129,12 @@ export const SearchContainer = styled.div`
   margin: 15px;
   background-color: ${({ theme }) => theme.colors.lightGray2};
   border: 1px solid ${({ theme }) => theme.colors.lightGray1};
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 10px;
+    padding: 10px;
+  }
 `;
 
 export const SearchIcon = styled(AiOutlineSearch)`
@@ -107,16 +156,28 @@ export const SearchInput = styled.input`
   &::placeholder {
     color: ${({ theme }) => theme.colors.gray};
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    font-size: 14px;
+  }
 `;
 
 export const TdEmptyData = styled.td`
-    text-align: center;
-    padding: 16px;
-`
+  text-align: center;
+  padding: 16px;
+  @media (max-width: 768px) {
+    padding: 12px;
+  }
+`;
 
 export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 10px; 
-`;
+  padding: 10px;
 
+  @media (max-width: 768px) {
+    justify-content: end;
+    padding-right: 0px;
+  }
+`;
