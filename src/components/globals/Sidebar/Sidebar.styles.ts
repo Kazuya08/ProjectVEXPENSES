@@ -73,3 +73,19 @@ export const MenuIcon = styled.div`
   justify-content: center;
   margin-left: 5px;
 `;
+
+export const LogoutButton = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  background-color: ${({ theme }) => theme.colors.mediumBlue}; 
+  color: ${({ theme }) => theme.colors.white};
+  margin-top: auto; 
+  margin-bottom: 100px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.lightBlue};
+  }
+`;
