@@ -5,7 +5,7 @@ import { useForm, Controller, SubmitHandler, useFieldArray } from 'react-hook-fo
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
-import { ContactContainer, DeleteButton, Divider, ErrorMessage, FormContainer, Input, InputWrapper, LoadingIcon, MaskInput } from './Form.styles';
+import { ContactContainer, DeleteButton, Divider, ErrorMessage, FormContainer, Input, InputWrapper, LoadingIcon, MaskInput, Label } from './Form.styles';
 import Button from '@/components/ui/Button';
 import { LuTrash2 } from 'react-icons/lu';
 import api from '@/services/api';
@@ -143,7 +143,9 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
     return (
         <FormContainer onSubmit={supplierData ? handleSubmit(onSubmitUpdate) : handleSubmit(onSubmitCreate)}>
             <InputWrapper>
-                <label>Nome*</label>
+                <Label htmlFor="name" isRequired>
+                    Nome
+                </Label>
                 <Controller
                     name="name"
                     control={control}
@@ -153,7 +155,7 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
             </InputWrapper>
 
             <InputWrapper>
-                <label>Descrição</label>
+                <Label htmlFor="description">Descrição</Label>
                 <Controller
                     name="description"
                     control={control}
@@ -162,11 +164,15 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
                 {errors.description && <ErrorMessage>{errors.description.message}</ErrorMessage>}
             </InputWrapper>
 
-            <label>Contato (ao menos 1 obrigatório)</label>
+            <Label htmlFor="contacts">
+                Contato (ao menos 1 obrigatório)
+            </Label>
             {fields.map((item, index) => (
                 <ContactContainer key={item.id}>
                     <InputWrapper>
-                        <label>Nome*</label>
+                        <Label htmlFor="name" isRequired>
+                            Nome
+                        </Label>
                         <Controller
                             name={`contacts.${index}.name`}
                             control={control}
@@ -176,7 +182,9 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
                     </InputWrapper>
 
                     <InputWrapper>
-                        <label>Telefone*</label>
+                        <Label htmlFor="phone" isRequired>
+                            Telefone
+                        </Label>
                         <Controller
                             name={`contacts.${index}.phone`}
                             control={control}
@@ -212,7 +220,9 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
             <Button variant="primary" type="button" onClick={() => append({ name: '', phone: '' })}>Adicionar Contato</Button>
 
             <InputWrapper>
-                <label>CEP*</label>
+                <Label htmlFor="zip_code" isRequired>
+                    CEP
+                </Label>
                 <Controller
                     name="address.zip_code"
                     control={control}
@@ -230,7 +240,9 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
             </InputWrapper>
 
             <InputWrapper>
-                <label>Estado*</label>
+                <Label htmlFor="state" isRequired>
+                    Estado
+                </Label>
                 <Controller
                     name="address.state"
                     control={control}
@@ -240,7 +252,9 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
             </InputWrapper>
 
             <InputWrapper>
-                <label>Cidade*</label>
+                <Label htmlFor="city" isRequired>
+                    Cidade
+                </Label>
                 <Controller
                     name="address.city"
                     control={control}
@@ -250,7 +264,9 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
             </InputWrapper>
 
             <InputWrapper>
-                <label>Logradouro*</label>
+                <Label htmlFor="street" isRequired>
+                    Logradouro
+                </Label>
                 <Controller
                     name="address.street"
                     control={control}
@@ -260,7 +276,9 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
             </InputWrapper>
 
             <InputWrapper>
-                <label>Número*</label>
+                <Label htmlFor="number" isRequired>
+                    Número
+                </Label>
                 <Controller
                     name="address.number"
                     control={control}
@@ -270,7 +288,9 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
             </InputWrapper>
 
             <InputWrapper>
-                <label>Referência</label>
+                <Label htmlFor="reference">
+                    Referência
+                </Label>
                 <Controller
                     name="address.reference"
                     control={control}

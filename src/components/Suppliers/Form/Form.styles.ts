@@ -12,6 +12,23 @@ export const FormContainer = styled.form`
   margin: auto;
 `;
 
+export const Label = styled.label.withConfig({
+  shouldForwardProp: (prop) => prop !== "isRequired",
+}) <{ isRequired?: boolean }>`
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.black};
+
+  ${({ isRequired }) =>
+    isRequired &&
+    `
+    &::after {
+      content: " *"; 
+      color: red;
+      font-weight: bold;
+    }
+  `}
+`;
+
 export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
