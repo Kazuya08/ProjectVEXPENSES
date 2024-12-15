@@ -2,7 +2,7 @@
   "suppliers": [
     {
       "id": "1",
-      "name": "Fornecedor A",
+      "name": "Fornecedor AA",
       "description": "Fornecedor de equipamentos",
       "contacts": [
         {
@@ -202,7 +202,7 @@
         "street": "Avenida Padre Arlindo Vieira",
         "city": "São Paulo",
         "state": "SP",
-        "cep": "04166003"
+        "zip_code": "04166003"
       },
       "contacts": [
         {

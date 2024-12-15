@@ -3,6 +3,7 @@ import FormFornecedor from '@/components/Suppliers/Form/Form'
 import { Title } from '@/components/Suppliers/Title/title.style'
 import React from 'react'
 
+
 export default function AddSupplierPage() {
     return (
         <div>

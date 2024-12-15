@@ -8,8 +8,10 @@ import { LuPencil, LuTrash2 } from "react-icons/lu";
 import Button from "@/components/ui/Button";
 import ButtonGroup from "@/components/globals/ButtonGroups.style";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const DataTable: React.FC = () => {
+    const router = useRouter();
     const [data, setData] = useState<ISupplier[]>([]);
     const [filteredData, setFilteredData] = useState<ISupplier[]>([]);
     const [searchText, setSearchText] = useState("");
@@ -56,6 +58,7 @@ const DataTable: React.FC = () => {
 
 
     const handleEdit = (id: number) => {
+        router.push(`/admin/fornecedores/${id}`)
     };
 
     const handleDelete = async (id: number) => {

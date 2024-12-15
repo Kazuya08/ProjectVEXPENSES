@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm, Controller, SubmitHandler, useFieldArray } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,13 +11,14 @@ import { LuTrash2 } from 'react-icons/lu';
 import api from '@/services/api';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import { ISupplier } from '@/types/supplier';
 
 interface IFormInputs {
     name: string;
     description?: string;
     contacts?: { name: string; phone: string }[];
     address: {
-        cep: string;
+        zip_code: string;
         state: string;
         city: string;
         street: string;
@@ -26,18 +27,22 @@ interface IFormInputs {
     };
 }
 
+interface FormFornecedorProps {
+    supplierData?: ISupplier;
+}
+
 const schema = yup.object().shape({
     name: yup.string().required('Nome é obrigatório').matches(/^[a-zA-Z0-9\s]+$/, 'Nome deve ser alfanumérico'),
     description: yup.string(),
     contacts: yup.array().of(
         yup.object().shape({
-            name: yup.string().required('Nome é obrigatório').matches(/^[a-zA-Z\s]+$/, 'Nome deve ser alfabético'),
+            name: yup.string().required('Nome é obrigatório').matches(/^[a-zA-Z0-9\sÀ-ÿ]*$/, 'Nome deve ser alfabético'),
             phone: yup.string().required('Telefone é obrigatório').matches(/^\d{10,11}$/, 'Telefone deve ter 10 ou 11 dígitos')
                 .transform((value) => value.replace(/\D/g, '')),
         })
     ).min(1, 'Pelo menos 1 contato é obrigatório'),
     address: yup.object().shape({
-        cep: yup.string()
+        zip_code: yup.string()
             .required('CEP é obrigatório')
             .matches(/^\d{8}$/, 'CEP inválido')
             .transform((value) => value.replace(/\D/g, '')),
@@ -45,15 +50,17 @@ const schema = yup.object().shape({
         city: yup.string().required('Cidade é obrigatória').matches(/^[a-zA-ZÀ-ÿ\s]+$/, 'Cidade deve ser alfabética'),
         street: yup.string().required('Logradouro é obrigatório'),
         number: yup.number().required('Número é obrigatório').positive('Número deve ser positivo').integer('Número deve ser inteiro'),
-        reference: yup.string().matches(/^[a-zA-Z0-9\s]*$/, 'Referência deve ser alfanumérica').optional(),
+        reference: yup.string().matches(/^[a-zA-Z0-9\sÀ-ÿ]*$/, 'Referência deve ser alfanumérica').optional(),
     })
 })
 
-export default function FormFornecedor() {
+
+
+export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
     const router = useRouter();
-    const { control, handleSubmit, setValue, formState: { errors }, reset } = useForm<IFormInputs>({
+    const { control, handleSubmit, setValue, formState: { errors }, reset, watch } = useForm<IFormInputs>({
         resolver: yupResolver(schema),
-        defaultValues: {
+        defaultValues: supplierData || {
             name: "",
             contacts: [
                 {
@@ -62,7 +69,7 @@ export default function FormFornecedor() {
                 }
             ],
             address: {
-                cep: "",
+                zip_code: "",
                 state: "",
                 city: "",
                 street: "",
@@ -88,7 +95,7 @@ export default function FormFornecedor() {
         }
     };
 
-    const onSubmit: SubmitHandler<IFormInputs> = async (data) => {
+    const onSubmitCreate: SubmitHandler<IFormInputs> = async (data) => {
         try {
             await api.post('/suppliers', data);
 
@@ -104,8 +111,24 @@ export default function FormFornecedor() {
         }
     };
 
+    const onSubmitUpdate: SubmitHandler<IFormInputs> = async (data) => {
+        try {
+            await api.put(`/suppliers/${supplierData?.id}`, data);
+
+            toast.success('Fornecedor atualizado com sucesso!');
+
+            reset();
+
+            router.push('/admin/fornecedores');
+
+        } catch (error) {
+            console.error('Error update supplier:', error);
+            toast.error('Erro! Algo deu errado.');
+        }
+    };
+
     return (
-        <FormContainer onSubmit={handleSubmit(onSubmit)}>
+        <FormContainer onSubmit={supplierData ? handleSubmit(onSubmitUpdate) : handleSubmit(onSubmitCreate)}>
             <label>Nome*</label>
             <Controller
                 name="name"
@@ -173,7 +196,7 @@ export default function FormFornecedor() {
 
             <label>CEP*</label>
             <Controller
-                name="address.cep"
+                name="address.zip_code"
                 control={control}
                 render={({ field }) => (
                     <MaskInput
@@ -184,7 +207,7 @@ export default function FormFornecedor() {
                     />
                 )}
             />
-            {errors.address && <ErrorMessage>{errors.address.cep?.message}</ErrorMessage>}
+            {errors.address && <ErrorMessage>{errors.address.zip_code?.message}</ErrorMessage>}
 
             <label>Estado*</label>
             <Controller
@@ -226,7 +249,7 @@ export default function FormFornecedor() {
             />
             {errors.address && <ErrorMessage>{errors.address.reference?.message}</ErrorMessage>}
 
-            <Button variant="primary" type="submit">Cadastrar Fornecedor</Button>
+            <Button variant="primary" type="submit">{supplierData ? 'Atualizar Fornecedor' : 'Cadastrar Fornecedor'}</Button>
         </FormContainer>
     );
 };
