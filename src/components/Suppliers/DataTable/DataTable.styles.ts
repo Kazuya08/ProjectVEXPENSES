@@ -44,10 +44,10 @@ export const PaginationWrapper = styled.div`
 `;
 
 export const PaginationNumberButton = styled.button.withConfig({
-    shouldForwardProp: (prop) => prop !== "isActive",
+  shouldForwardProp: (prop) => prop !== "isActive",
 }) <{ isActive?: boolean }>`
     background-color: ${({ isActive, theme }) =>
-        isActive ? theme.colors.darkBlue : "transparent"};
+    isActive ? theme.colors.darkBlue : "transparent"};
     color: ${({ isActive, theme }) => (isActive ? "white" : theme.colors.darkBlue)};
     border: ${({ theme }) => `${theme.colors.darkBlue} 1px solid`};
     border-radius: 4px;
@@ -113,4 +113,10 @@ export const TdEmptyData = styled.td`
     text-align: center;
     padding: 16px;
 `
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px; 
+`;
 

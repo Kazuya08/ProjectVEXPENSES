@@ -1,11 +1,11 @@
 "use client"
 
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller, SubmitHandler, useFieldArray } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
-import { ContactContainer, DeleteButton, Divider, ErrorMessage, FormContainer, Input, InputWrapper, MaskInput } from './Form.styles';
+import { ContactContainer, DeleteButton, Divider, ErrorMessage, FormContainer, Input, InputWrapper, LoadingIcon, MaskInput } from './Form.styles';
 import Button from '@/components/ui/Button';
 import { LuTrash2 } from 'react-icons/lu';
 import api from '@/services/api';
@@ -58,7 +58,8 @@ const schema = yup.object().shape({
 
 export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
     const router = useRouter();
-    const { control, handleSubmit, setValue, formState: { errors }, reset, watch } = useForm<IFormInputs>({
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
+    const { control, handleSubmit, setValue, formState: { errors }, reset } = useForm<IFormInputs>({
         resolver: yupResolver(schema),
         defaultValues: supplierData || {
             name: "",
@@ -84,11 +85,13 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
 
     const fetchCEP = async (cep: string) => {
         try {
-            const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-            if (response.data) {
-                setValue('address.street', response.data.logradouro);
-                setValue('address.city', response.data.localidade);
-                setValue('address.state', response.data.uf);
+            if (cep) {
+                const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+                if (response.data) {
+                    setValue('address.street', response.data.logradouro);
+                    setValue('address.city', response.data.localidade);
+                    setValue('address.state', response.data.uf);
+                }
             }
         } catch (error) {
             console.error('Erro ao buscar CEP:', error);
@@ -96,7 +99,10 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
     };
 
     const onSubmitCreate: SubmitHandler<IFormInputs> = async (data) => {
+        setLoadingSubmit(true);
         try {
+            await new Promise((resolve) => setTimeout(resolve, 1500)); // timeout para simular latencia da api externa
+
             await api.post('/suppliers', data);
 
             toast.success('Fornecedor cadastrado com sucesso!');
@@ -108,11 +114,16 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
         } catch (error) {
             console.error('Error create supplier:', error);
             toast.error('Erro! Algo deu errado.');
+        } finally {
+            setLoadingSubmit(false);
         }
     };
 
     const onSubmitUpdate: SubmitHandler<IFormInputs> = async (data) => {
+        setLoadingSubmit(true);
         try {
+            await new Promise((resolve) => setTimeout(resolve, 1500));
+
             await api.put(`/suppliers/${supplierData?.id}`, data);
 
             toast.success('Fornecedor atualizado com sucesso!');
@@ -124,26 +135,32 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
         } catch (error) {
             console.error('Error update supplier:', error);
             toast.error('Erro! Algo deu errado.');
+        } finally {
+            setLoadingSubmit(false);
         }
     };
 
     return (
         <FormContainer onSubmit={supplierData ? handleSubmit(onSubmitUpdate) : handleSubmit(onSubmitCreate)}>
-            <label>Nome*</label>
-            <Controller
-                name="name"
-                control={control}
-                render={({ field }) => <Input {...field} />}
-            />
-            {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+            <InputWrapper>
+                <label>Nome*</label>
+                <Controller
+                    name="name"
+                    control={control}
+                    render={({ field }) => <Input {...field} />}
+                />
+                {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+            </InputWrapper>
 
-            <label>Descrição</label>
-            <Controller
-                name="description"
-                control={control}
-                render={({ field }) => <Input {...field} />}
-            />
-            {errors.description && <ErrorMessage>{errors.description.message}</ErrorMessage>}
+            <InputWrapper>
+                <label>Descrição</label>
+                <Controller
+                    name="description"
+                    control={control}
+                    render={({ field }) => <Input {...field} />}
+                />
+                {errors.description && <ErrorMessage>{errors.description.message}</ErrorMessage>}
+            </InputWrapper>
 
             <label>Contato (ao menos 1 obrigatório)</label>
             {fields.map((item, index) => (
@@ -153,7 +170,7 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
                         <Controller
                             name={`contacts.${index}.name`}
                             control={control}
-                            render={({ field }) => <input {...field} />}
+                            render={({ field }) => <Input {...field} />}
                         />
                         {errors.contacts && errors.contacts[index]?.name && <ErrorMessage>{errors.contacts[index].name.message}</ErrorMessage>}
                     </InputWrapper>
@@ -194,62 +211,80 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
             ))}
             <Button variant="primary" type="button" onClick={() => append({ name: '', phone: '' })}>Adicionar Contato</Button>
 
-            <label>CEP*</label>
-            <Controller
-                name="address.zip_code"
-                control={control}
-                render={({ field }) => (
-                    <MaskInput
-                        {...field}
-                        onBlur={() => fetchCEP(field.value)}
-                        mask="#####-###"
-                        placeholder="_____ - ___"
-                    />
-                )}
-            />
-            {errors.address && <ErrorMessage>{errors.address.zip_code?.message}</ErrorMessage>}
+            <InputWrapper>
+                <label>CEP*</label>
+                <Controller
+                    name="address.zip_code"
+                    control={control}
+                    render={({ field }) => (
+                        <MaskInput
+                            {...field}
+                            onBlur={() => fetchCEP(field.value)}
+                            mask="#####-###"
+                            placeholder="_____ - ___"
+                            width="120px"
+                        />
+                    )}
+                />
+                {errors.address && <ErrorMessage>{errors.address.zip_code?.message}</ErrorMessage>}
+            </InputWrapper>
 
-            <label>Estado*</label>
-            <Controller
-                name="address.state"
-                control={control}
-                render={({ field }) => <Input {...field} />}
-            />
-            {errors.address && <ErrorMessage>{errors.address.state?.message}</ErrorMessage>}
+            <InputWrapper>
+                <label>Estado*</label>
+                <Controller
+                    name="address.state"
+                    control={control}
+                    render={({ field }) => <Input {...field} />}
+                />
+                {errors.address && <ErrorMessage>{errors.address.state?.message}</ErrorMessage>}
+            </InputWrapper>
 
-            <label>Cidade*</label>
-            <Controller
-                name="address.city"
-                control={control}
-                render={({ field }) => <Input {...field} />}
-            />
-            {errors.address && <ErrorMessage>{errors.address.city?.message}</ErrorMessage>}
+            <InputWrapper>
+                <label>Cidade*</label>
+                <Controller
+                    name="address.city"
+                    control={control}
+                    render={({ field }) => <Input {...field} />}
+                />
+                {errors.address && <ErrorMessage>{errors.address.city?.message}</ErrorMessage>}
+            </InputWrapper>
 
-            <label>Logradouro*</label>
-            <Controller
-                name="address.street"
-                control={control}
-                render={({ field }) => <Input {...field} />}
-            />
-            {errors.address && <ErrorMessage>{errors.address.street?.message}</ErrorMessage>}
+            <InputWrapper>
+                <label>Logradouro*</label>
+                <Controller
+                    name="address.street"
+                    control={control}
+                    render={({ field }) => <Input {...field} />}
+                />
+                {errors.address && <ErrorMessage>{errors.address.street?.message}</ErrorMessage>}
+            </InputWrapper>
 
-            <label>Número*</label>
-            <Controller
-                name="address.number"
-                control={control}
-                render={({ field }) => <Input {...field} />}
-            />
-            {errors.address && <ErrorMessage>{errors.address.number?.message}</ErrorMessage>}
+            <InputWrapper>
+                <label>Número*</label>
+                <Controller
+                    name="address.number"
+                    control={control}
+                    render={({ field }) => <Input {...field} />}
+                />
+                {errors.address && <ErrorMessage>{errors.address.number?.message}</ErrorMessage>}
+            </InputWrapper>
 
-            <label>Referência</label>
-            <Controller
-                name="address.reference"
-                control={control}
-                render={({ field }) => <Input {...field} />}
-            />
-            {errors.address && <ErrorMessage>{errors.address.reference?.message}</ErrorMessage>}
+            <InputWrapper>
+                <label>Referência</label>
+                <Controller
+                    name="address.reference"
+                    control={control}
+                    render={({ field }) => <Input {...field} />}
+                />
+                {errors.address && <ErrorMessage>{errors.address.reference?.message}</ErrorMessage>}
+            </InputWrapper>
 
-            <Button variant="primary" type="submit">{supplierData ? 'Atualizar Fornecedor' : 'Cadastrar Fornecedor'}</Button>
+            <Button variant="primary" type="submit" disabled={loadingSubmit}>
+                {loadingSubmit ?
+                    <LoadingIcon />
+                    : supplierData ? 'Atualizar Fornecedor' : 'Cadastrar Fornecedor'
+                }
+            </Button>
         </FormContainer>
     );
 };

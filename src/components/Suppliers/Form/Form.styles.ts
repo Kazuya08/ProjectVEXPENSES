@@ -1,6 +1,7 @@
 "use client"
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import MaskedInput from 'react-maskedinput';
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export const FormContainer = styled.form`
   display: flex;
@@ -9,29 +10,6 @@ export const FormContainer = styled.form`
   width: 100%;
   max-width: 100%;
   margin: auto;
-`;
-
-export const Input = styled.input`
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-    background-color: #fff;
-    
-  &:focus {
-    border-color: #0082f5;
-  }
-`;
-
-export const ContactContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
 export const InputWrapper = styled.div`
@@ -46,19 +24,59 @@ export const InputWrapper = styled.div`
     color: #333;
   }
 
-  input {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-    background-color: #fff;
-    margin-bottom: 10px;
+  &:last-child {
+    margin-right: 0;
   }
 
-  & + & {
-    margin-left: 1rem;
+  @media (max-width: 768px) {
+    width: 100%; 
+    margin-right: 0;
   }
 `;
+
+export const Input = styled.input`
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #fff;
+    width: ${({ width }) => width || '100%'};
+    box-sizing: border-box;
+    
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.mediumBlue};
+  }
+`;
+export const MaskInput = styled(MaskedInput) <{ width?: string }>`
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: ${({ width }) => width || '100%'};
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.mediumBlue};
+  }
+`;
+
+export const ContactContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 15px;
+  background-color: ${({ theme }) => theme.colors.lightGray2};
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    flex-direction: column; 
+    align-items: flex-start; 
+    gap: 1rem;
+  }
+`;
+
 
 export const DeleteButton = styled.button`
   font-size: 24px;
@@ -73,6 +91,12 @@ export const DeleteButton = styled.button`
   &:hover {
     color: #c0392b;
   }
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    align-self: flex-end; 
+    margin-top: 10px; 
+  }
 `;
 
 export const ErrorMessage = styled.span`
@@ -82,23 +106,32 @@ export const ErrorMessage = styled.span`
   margin-left: 5px;
   display: inline-block;
   position: relative;
+  margin-top: 10px;
 `;
 
 export const Divider = styled.div`
-width: 1px;
-background-color: #ddd;
-height: 60px; 
-margin: 0 1rem;
+  width: 1px;
+  background-color: #ddd;
+  height: 60px; 
+  margin: 0 10px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
-export const MaskInput = styled(MaskedInput)`
-padding: 10px;
-font-size: 16px;
-border: 1px solid #ddd;
-border-radius: 4px;
-width: 100%;
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
 
-&:focus {
-  border-color: #0082f5;
-}
+export const LoadingIcon = styled(AiOutlineLoading3Quarters)`
+  animation: ${spin} 1s linear infinite;
+  font-size: 16px; 
+  color: inherit;
+  margin: auto;
 `;

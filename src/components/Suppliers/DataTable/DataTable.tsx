@@ -3,7 +3,7 @@
 import api from "@/services/api";
 import { IContact, ISupplier } from "@/types/supplier";
 import { useEffect, useState } from "react";
-import { PaginationButton, PaginationNumberButton, PaginationWrapper, SearchContainer, SearchIcon, SearchInput, Table, TableWrapper, TdEmptyData } from "./DataTable.styles";
+import { ButtonWrapper, PaginationButton, PaginationNumberButton, PaginationWrapper, SearchContainer, SearchIcon, SearchInput, Table, TableWrapper, TdEmptyData } from "./DataTable.styles";
 import { LuPencil, LuTrash2 } from "react-icons/lu";
 import Button from "@/components/ui/Button";
 import ButtonGroup from "@/components/globals/ButtonGroups.style";
@@ -74,92 +74,103 @@ const DataTable: React.FC = () => {
         }
     };
 
+    const handleCreate = () => {
+        router.push("/admin/fornecedores/adicionar-fornecedor")
+    };
+
     return (
-        <TableWrapper>
-            <SearchContainer>
-                <SearchIcon />
-                <SearchInput
-                    type="text"
-                    placeholder="Buscar por nome"
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                />
-            </SearchContainer>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Contatos</th>
-                        <th>Endereço</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredData.length > 0 ? (
-                        filteredData.map((supplier) => (
-                            <tr key={supplier.id}>
-                                <td>{supplier.name}</td>
-                                <td>{supplier.description}</td>
-                                <td>
-                                    {supplier.contacts.map((contact: IContact, index: number) => (
-                                        <p key={index}>
-                                            {contact.name} ({contact.phone})
-                                        </p>
-                                    ))}
-                                </td>
-                                <td>
-                                    {supplier.address.street}, {supplier.address.number} -{' '}
-                                    {supplier.address.city}, {supplier.address.state}
-                                </td>
-                                <td>
-                                    <ButtonGroup gap="16px" direction="row" align="center">
-                                        <Button variant="outline" onClick={() => handleEdit(supplier.id)}>
-                                            <LuPencil size={20} />
-                                        </Button>
-                                        <Button variant="outline" onClick={() => handleDelete(supplier.id)}>
-                                            <LuTrash2 size={20} />
-                                        </Button>
-                                    </ButtonGroup>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
+        <div>
+            <ButtonWrapper>
+                <Button variant="primary" onClick={handleCreate}>
+                    Cadastrar fornecedor
+                </Button>
+            </ButtonWrapper>
+            <TableWrapper>
+                <SearchContainer>
+                    <SearchIcon />
+                    <SearchInput
+                        type="text"
+                        placeholder="Buscar por nome"
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                    />
+                </SearchContainer>
+                <Table>
+                    <thead>
                         <tr>
-                            <TdEmptyData colSpan={4}>
-                                Nenhum dado encontrado
-                            </TdEmptyData>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Contatos</th>
+                            <th>Endereço</th>
+                            <th>Ações</th>
                         </tr>
-                    )}
+                    </thead>
+                    <tbody>
+                        {filteredData.length > 0 ? (
+                            filteredData.map((supplier) => (
+                                <tr key={supplier.id}>
+                                    <td>{supplier.name}</td>
+                                    <td>{supplier.description}</td>
+                                    <td>
+                                        {supplier.contacts.map((contact: IContact, index: number) => (
+                                            <p key={index}>
+                                                {contact.name} ({contact.phone})
+                                            </p>
+                                        ))}
+                                    </td>
+                                    <td>
+                                        {supplier.address.street}, {supplier.address.number} -{' '}
+                                        {supplier.address.city}, {supplier.address.state}
+                                    </td>
+                                    <td>
+                                        <ButtonGroup gap="16px" direction="row" align="center">
+                                            <Button variant="outline" onClick={() => handleEdit(supplier.id)}>
+                                                <LuPencil size={20} />
+                                            </Button>
+                                            <Button variant="outline" onClick={() => handleDelete(supplier.id)}>
+                                                <LuTrash2 size={20} />
+                                            </Button>
+                                        </ButtonGroup>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <TdEmptyData colSpan={4}>
+                                    Nenhum dado encontrado
+                                </TdEmptyData>
+                            </tr>
+                        )}
 
-                </tbody>
-            </Table>
-            <PaginationWrapper>
-                <PaginationButton
-                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                    disabled={currentPage === 1}
-                >
-                    Anterior
-                </PaginationButton>
-
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                    <PaginationNumberButton
-                        key={page}
-                        isActive={page === currentPage}
-                        onClick={() => setCurrentPage(page)}
+                    </tbody>
+                </Table>
+                <PaginationWrapper>
+                    <PaginationButton
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
                     >
-                        {page}
-                    </PaginationNumberButton>
-                ))}
+                        Anterior
+                    </PaginationButton>
 
-                <PaginationButton
-                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-                    disabled={currentPage === totalPages}
-                >
-                    Próxima
-                </PaginationButton>
-            </PaginationWrapper>
-        </TableWrapper>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                        <PaginationNumberButton
+                            key={page}
+                            isActive={page === currentPage}
+                            onClick={() => setCurrentPage(page)}
+                        >
+                            {page}
+                        </PaginationNumberButton>
+                    ))}
+
+                    <PaginationButton
+                        onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                        disabled={currentPage === totalPages}
+                    >
+                        Próxima
+                    </PaginationButton>
+                </PaginationWrapper>
+            </TableWrapper>
+        </div>
     );
 };
 
