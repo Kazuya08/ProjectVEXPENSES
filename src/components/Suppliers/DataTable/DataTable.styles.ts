@@ -224,3 +224,13 @@ export const LoadingIcon = styled(AiOutlineLoading3Quarters)`
   color: inherit;
   margin: auto;
 `;
+
+export const GoogleMapsLink = styled.a`
+  margin-left: 8px;
+  color: ${({ theme }) => theme.colors.mediumBlue};
+  text-decoration: none;
+
+  &:hover {
+    color:${({ theme }) => theme.colors.darkBlue}
+  }
+`;

@@ -3,7 +3,7 @@
 import api from "@/services/api";
 import { IContact, ISupplier } from "@/types/supplier";
 import { useEffect, useState } from "react";
-import { ButtonWrapper, ContactButtonContainer, PaginationButton, PaginationNumberButton, PaginationWrapper, SearchContainer, SearchIcon, SearchInput, Table, TableWrapper, TdEmptyData, WhatsAppButton } from "./DataTable.styles";
+import { ButtonWrapper, ContactButtonContainer, GoogleMapsLink, PaginationButton, PaginationNumberButton, PaginationWrapper, SearchContainer, SearchIcon, SearchInput, Table, TableWrapper, TdEmptyData, WhatsAppButton } from "./DataTable.styles";
 import { LuPencil, LuTrash2 } from "react-icons/lu";
 import Button from "@/components/ui/Button";
 import ButtonGroup from "@/components/globals/ButtonGroups.style";
@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { AiOutlineWhatsApp } from "react-icons/ai";
 import Papa from "papaparse";
 import { LoadingIcon } from "@/components/LoadingIcon";
+import { FiMapPin } from "react-icons/fi";
 
 const DataTable: React.FC = () => {
     const router = useRouter();
@@ -159,6 +160,15 @@ const DataTable: React.FC = () => {
                                     <td>
                                         {supplier.address.street}, {supplier.address.number} -{' '}
                                         {supplier.address.city}, {supplier.address.state}
+                                        <GoogleMapsLink
+                                            href={`https://www.google.com/maps?q=${encodeURIComponent(
+                                                `${supplier.address.street}, ${supplier.address.number}, ${supplier.address.city}, ${supplier.address.state}`
+                                            )}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <FiMapPin size={20} />
+                                        </GoogleMapsLink>
                                     </td>
                                     <td>
                                         <ButtonGroup gap="16px" direction="row" align="center">
