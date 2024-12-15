@@ -1,5 +1,5 @@
-import { AiOutlineSearch } from "react-icons/ai";
-import styled from "styled-components";
+import { AiOutlineLoading3Quarters, AiOutlineSearch } from "react-icons/ai";
+import styled, { keyframes } from "styled-components";
 
 export const TableWrapper = styled.div`
   margin: 20px auto;
@@ -175,9 +175,52 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   padding: 10px;
+  gap: 5px;
 
   @media (max-width: 768px) {
     justify-content: end;
     padding-right: 0px;
   }
+`;
+
+
+export const ContactButtonContainer = styled.div`
+  display: flex;
+  align-items: center; 
+  gap: 10px;
+`;
+
+
+export const WhatsAppButton = styled.a`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #25D366; 
+  color: white;
+  font-size: 16px;
+  padding: 5px 5px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease; 
+  
+  &:hover {
+    background-color: #128C7E; 
+    transform: scale(1.1); 
+  }
+`;
+
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const LoadingIcon = styled(AiOutlineLoading3Quarters)`
+  animation: ${spin} 1s linear infinite;
+  font-size: 16px; 
+  color: inherit;
+  margin: auto;
 `;

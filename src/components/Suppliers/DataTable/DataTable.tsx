@@ -3,15 +3,19 @@
 import api from "@/services/api";
 import { IContact, ISupplier } from "@/types/supplier";
 import { useEffect, useState } from "react";
-import { ButtonWrapper, PaginationButton, PaginationNumberButton, PaginationWrapper, SearchContainer, SearchIcon, SearchInput, Table, TableWrapper, TdEmptyData } from "./DataTable.styles";
+import { ButtonWrapper, ContactButtonContainer, PaginationButton, PaginationNumberButton, PaginationWrapper, SearchContainer, SearchIcon, SearchInput, Table, TableWrapper, TdEmptyData, WhatsAppButton } from "./DataTable.styles";
 import { LuPencil, LuTrash2 } from "react-icons/lu";
 import Button from "@/components/ui/Button";
 import ButtonGroup from "@/components/globals/ButtonGroups.style";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { AiOutlineWhatsApp } from "react-icons/ai";
+import Papa from "papaparse";
+import { LoadingIcon } from "@/components/LoadingIcon";
 
 const DataTable: React.FC = () => {
     const router = useRouter();
+    const [loadingExportCsv, setLoadingExportCsv] = useState(false);
     const [data, setData] = useState<ISupplier[]>([]);
     const [filteredData, setFilteredData] = useState<ISupplier[]>([]);
     const [searchText, setSearchText] = useState("");
@@ -78,9 +82,38 @@ const DataTable: React.FC = () => {
         router.push("/admin/fornecedores/adicionar-fornecedor")
     };
 
+    const handleExportCSV = async () => {
+        setLoadingExportCsv(true);
+        try {
+            await new Promise((resolve) => setTimeout(resolve, 1500));
+
+            const csvData = Papa.unparse(filteredData.map(supplier => ({
+                Name: supplier.name,
+                Description: supplier.description,
+                Contacts: supplier.contacts.map(contact => `${contact.name} (${contact.phone})`).join(', '),
+                Address: `${supplier.address.street}, ${supplier.address.number} - ${supplier.address.city}, ${supplier.address.state}`
+            })));
+
+            const blob = new Blob([csvData], { type: 'text/csv' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'fornecedores.csv';
+            link.click();
+        } catch (error) {
+            console.error('Error export csv suppliers:', error);
+            toast.error('Erro ao exportar!');
+        } finally {
+            setLoadingExportCsv(false);
+        }
+    };
+
+
     return (
         <div>
             <ButtonWrapper>
+                <Button variant="primary" onClick={handleExportCSV}>
+                    {loadingExportCsv ? <LoadingIcon /> : 'Exportar para CSV'}
+                </Button>
                 <Button variant="primary" onClick={handleCreate}>
                     Cadastrar fornecedor
                 </Button>
@@ -113,9 +146,14 @@ const DataTable: React.FC = () => {
                                     <td>{supplier.description}</td>
                                     <td>
                                         {supplier.contacts.map((contact: IContact, index: number) => (
-                                            <p key={index}>
-                                                {contact.name} ({contact.phone})
-                                            </p>
+                                            <ContactButtonContainer key={index}>
+                                                <p>{contact.name} ({contact.phone})</p>
+                                                {contact.phone && (
+                                                    <WhatsAppButton href={`https://wa.me/${contact.phone.replace(/\D/g, '')}?text=Olá,%20${contact.name}`} target="_blank" rel="noopener noreferrer" >
+                                                        <AiOutlineWhatsApp size={15} />
+                                                    </WhatsAppButton>
+                                                )}
+                                            </ContactButtonContainer>
                                         ))}
                                     </td>
                                     <td>

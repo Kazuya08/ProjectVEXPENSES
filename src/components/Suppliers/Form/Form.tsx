@@ -5,13 +5,14 @@ import { useForm, Controller, SubmitHandler, useFieldArray } from 'react-hook-fo
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios from 'axios';
-import { ContactContainer, DeleteButton, Divider, ErrorMessage, FormContainer, Input, InputWrapper, LoadingIcon, MaskInput, Label } from './Form.styles';
+import { ContactContainer, DeleteButton, Divider, ErrorMessage, FormContainer, Input, InputWrapper, MaskInput, Label } from './Form.styles';
 import Button from '@/components/ui/Button';
 import { LuTrash2 } from 'react-icons/lu';
 import api from '@/services/api';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { ISupplier } from '@/types/supplier';
+import { LoadingIcon } from '@/components/LoadingIcon';
 
 interface IFormInputs {
     name: string;
@@ -95,6 +96,7 @@ export default function FormFornecedor({ supplierData }: FormFornecedorProps) {
             }
         } catch (error) {
             console.error('Erro ao buscar CEP:', error);
+            toast.error('Erro ao buscar CEP.');
         }
     };
 

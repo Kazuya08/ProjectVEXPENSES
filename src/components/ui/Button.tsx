@@ -25,6 +25,7 @@ const Button = styled.button<ButtonProps>`
   font-family: ${({ theme }) => theme.fonts.body};
   font-size: 16px;
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  min-width: 150px;
 
   &:hover {
     background-color: ${({ theme, variant }) =>
