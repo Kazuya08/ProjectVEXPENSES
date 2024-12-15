@@ -4,6 +4,10 @@ import api from "@/services/api";
 import { IContact, ISupplier } from "@/types/supplier";
 import { useEffect, useState } from "react";
 import { PaginationButton, PaginationNumberButton, PaginationWrapper, SearchContainer, SearchIcon, SearchInput, Table, TableWrapper, TdEmptyData } from "./DataTable.styles";
+import { LuPencil, LuTrash2 } from "react-icons/lu";
+import Button from "@/components/ui/Button";
+import ButtonGroup from "@/components/globals/ButtonGroups.style";
+import { toast } from "react-toastify";
 
 const DataTable: React.FC = () => {
     const [data, setData] = useState<ISupplier[]>([]);
@@ -46,6 +50,26 @@ const DataTable: React.FC = () => {
         setFilteredData(filtered);
     }, [searchText, data]);
 
+    const reloadPage = () => {
+        window.location.reload()
+    };
+
+
+    const handleEdit = (id: number) => {
+    };
+
+    const handleDelete = async (id: number) => {
+        try {
+            await api.delete(`/suppliers/${id}`);
+
+            toast.success('Fornecedor deletado com sucesso!');
+            reloadPage();
+
+        } catch (error) {
+            console.error('Error delete supplier:', error);
+            toast.error('Erro! Algo deu errado.');
+        }
+    };
 
     return (
         <TableWrapper>
@@ -65,6 +89,7 @@ const DataTable: React.FC = () => {
                         <th>Descrição</th>
                         <th>Contatos</th>
                         <th>Endereço</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,6 +108,16 @@ const DataTable: React.FC = () => {
                                 <td>
                                     {supplier.address.street}, {supplier.address.number} -{' '}
                                     {supplier.address.city}, {supplier.address.state}
+                                </td>
+                                <td>
+                                    <ButtonGroup gap="16px" direction="row" align="center">
+                                        <Button variant="outline" onClick={() => handleEdit(supplier.id)}>
+                                            <LuPencil size={20} />
+                                        </Button>
+                                        <Button variant="outline" onClick={() => handleDelete(supplier.id)}>
+                                            <LuTrash2 size={20} />
+                                        </Button>
+                                    </ButtonGroup>
                                 </td>
                             </tr>
                         ))
