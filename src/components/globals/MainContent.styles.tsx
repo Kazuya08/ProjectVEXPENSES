@@ -5,7 +5,9 @@ interface MainContentProps {
   isOpen?: boolean;
 }
 
-export const MainContent = styled.main<MainContentProps>`
+export const MainContent = styled.main.withConfig({
+  shouldForwardProp: (prop) => prop !== 'isOpen',
+}) <MainContentProps>`
   margin-left: ${({ isOpen }) => (isOpen ? '250px' : '60px')}; 
   padding: 20px 100px;
   flex-grow: 1; 
@@ -14,6 +16,6 @@ export const MainContent = styled.main<MainContentProps>`
 
   @media (max-width: 768px) {
     margin-left: 0;
-    padding: 20px 20px;
+    padding: 100px 20px;
   }
 `;

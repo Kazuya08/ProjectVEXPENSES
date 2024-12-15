@@ -4,11 +4,11 @@ import styled from 'styled-components';
 interface SidebarProps {
   isOpen?: boolean;
 }
-
-export const SidebarContainer = styled.div<SidebarProps>`
+export const SidebarContainer = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'isOpen',
+}) <SidebarProps>`
   width: ${({ isOpen }) => (isOpen ? '250px' : '60px')};
   height: 100%;
-  /* margin-top: 80px; */
   background-color: ${({ theme }) => theme.colors.darkBlue};
   color: ${({ theme }) => theme.colors.white};
   padding-top: 20px;
@@ -31,25 +31,37 @@ export const SidebarContainer = styled.div<SidebarProps>`
   }
 `;
 
-export const MenuItem = styled.div`
-  padding: ${({ theme }) => theme.spacings.medium};
-  cursor: pointer;
+export const MenuItem = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== "isActive",
+}) <{ isActive?: boolean }>`
   display: flex;
   align-items: center;
-  gap: 10px;
-  border-radius: 8px;
-  opacity: 1;
-  transition: opacity 0.3s ease;
+  padding: 10px;
+  cursor: pointer;
+  background-color: ${({ isActive, theme }) =>
+    isActive ? theme.colors.lightGray1 : "transparent"};
+  color: ${({ isActive, theme }) => (isActive ? theme.colors.darkBlue : "white")};
+  transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.mediumBlue};
-    transition: background-color 0.3s ease;
+    background-color: ${({ theme }) => theme.colors.lightGray1};
+    color: ${({ theme }) => theme.colors.darkBlue};
   }
+`;
+
+
+export const MenuLogo = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: transparent;
+  color: "white";
+  transition: background-color 0.3s ease;
 `;
 
 export const MenuText = styled.span`
   display: inline;
-  margin-left: 10px;
+  margin-left: 20px;
   opacity: 1;
   transition: opacity 0.3s ease;
 `;
@@ -59,4 +71,5 @@ export const MenuIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-left: 5px;
 `;
