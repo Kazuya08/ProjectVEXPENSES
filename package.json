@@ -11,20 +11,26 @@
     "server": "json-server server.json --watch --port 3333"
   },
   "dependencies": {
-    "@types/styled-components": "^5.1.34",
+    "@hookform/resolvers": "^3.9.1",
     "axios": "^1.7.9",
     "json-server": "1.0.0-beta.3",
     "next": "15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.1",
     "react-icons": "^5.4.0",
-    "styled-components": "^6.1.13"
+    "react-maskedinput": "^4.0.1",
+    "react-toastify": "^10.0.6",
+    "styled-components": "^6.1.13",
+    "yup": "^1.5.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/react-maskedinput": "^4.0.10",
+    "@types/styled-components": "^5.1.34",
     "eslint": "^9",
     "eslint-config-next": "15.1.0",
     "eslint-config-prettier": "^9.1.0",

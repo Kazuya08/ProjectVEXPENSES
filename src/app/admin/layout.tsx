@@ -1,4 +1,4 @@
-import { AdminLayout } from "@/components/globals/adminLayout";
+import { AdminLayout } from "@/components/globals/AdminLayout";
 import { ReactNode } from "react";
 
 

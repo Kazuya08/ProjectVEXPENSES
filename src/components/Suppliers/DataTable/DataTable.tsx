@@ -3,7 +3,7 @@
 import api from "@/services/api";
 import { IContact, ISupplier } from "@/types/supplier";
 import { useEffect, useState } from "react";
-import { PaginationButton, PaginationNumberButton, PaginationWrapper, SearchContainer, SearchIcon, SearchInput, Table, TableWrapper, TdEmptyData } from "./dataTable.styles";
+import { PaginationButton, PaginationNumberButton, PaginationWrapper, SearchContainer, SearchIcon, SearchInput, Table, TableWrapper, TdEmptyData } from "./DataTable.styles";
 
 const DataTable: React.FC = () => {
     const [data, setData] = useState<ISupplier[]>([]);

@@ -1,7 +1,8 @@
-import DataTable from '@/components/suppliers/dataTable/dataTable';
-import { Title } from '@/components/suppliers/Title/title.style';
+import { Hr } from '@/components/globals/Hr.styles';
+import DataTable from '@/components/Suppliers/DataTable/DataTable';
+import { Title } from '@/components/Suppliers/Title/title.style';
 
-export default async function Page() {
+export default function SupplierPage() {
 
   return (
     <div>
@@ -10,6 +11,7 @@ export default async function Page() {
         <p>Confira nossos fornecedores parceiros e escolha os mais alinhados às suas necessidades</p>
       </Title>
 
+      <Hr />
 
       <div>
         <DataTable />
