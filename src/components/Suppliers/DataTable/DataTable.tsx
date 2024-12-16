@@ -91,7 +91,9 @@ const DataTable: React.FC = () => {
         try {
             await new Promise((resolve) => setTimeout(resolve, 1500));
 
-            const csvData = Papa.unparse(filteredData.map(supplier => ({
+            const { data }: { data: ISupplier[] } = await api.get('/suppliers');
+
+            const csvData = Papa.unparse(data.map(supplier => ({
                 Name: supplier.name,
                 Description: supplier.description,
                 Contacts: supplier.contacts.map(contact => `${contact.name} (${contact.phone})`).join(', '),
