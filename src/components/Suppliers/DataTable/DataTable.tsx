@@ -71,6 +71,9 @@ const DataTable: React.FC = () => {
             await api.delete(`/suppliers/${id}`);
 
             toast.success('Fornecedor deletado com sucesso!');
+
+            await new Promise((resolve) => setTimeout(resolve, 1500));
+
             reloadPage();
 
         } catch (error) {

@@ -195,23 +195,27 @@
       }
     },
     {
-      "id": "e12d",
+      "id": "6cb4",
       "address": {
-        "reference": "Do lado do posto",
+        "reference": "Próximo ao mercado central",
         "number": 3100,
-        "street": "Avenida Padre Arlindo Vieira",
-        "city": "São Paulo",
+        "street": "Rua João Pazzini",
+        "city": "Diadema",
         "state": "SP",
-        "zip_code": "04166003"
+        "zip_code": "09960150"
       },
       "contacts": [
         {
+          "phone": "11111111111",
+          "name": "Kaio"
+        },
+        {
           "phone": "11959842879",
-          "name": "Diego"
+          "name": "Thiago"
         }
       ],
-      "description": "Fornecedor",
-      "name": "Diego Araujo"
+      "description": "Fornecedor de equipamentos",
+      "name": "Thiago Kazuya Furuguem Tsuda"
     }
   ]
 }
