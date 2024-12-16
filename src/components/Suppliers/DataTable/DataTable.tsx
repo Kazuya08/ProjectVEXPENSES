@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { AiOutlineWhatsApp } from "react-icons/ai";
 import Papa from "papaparse";
-import { LoadingIcon } from "@/components/LoadingIcon";
+import { LoadingIcon } from "@/components/ui/LoadingIcon";
 import { FiMapPin } from "react-icons/fi";
 
 const DataTable: React.FC = () => {

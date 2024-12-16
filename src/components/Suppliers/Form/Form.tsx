@@ -12,7 +12,7 @@ import api from '@/services/api';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { ISupplier } from '@/types/supplier';
-import { LoadingIcon } from '@/components/LoadingIcon';
+import { LoadingIcon } from '@/components/ui/LoadingIcon';
 
 interface IFormInputs {
     name: string;

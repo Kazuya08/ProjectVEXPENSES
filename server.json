@@ -2,7 +2,7 @@
   "suppliers": [
     {
       "id": "1",
-      "name": "Fornecedor AA",
+      "name": "Fornecedor A",
       "description": "Fornecedor de equipamentos",
       "contacts": [
         {

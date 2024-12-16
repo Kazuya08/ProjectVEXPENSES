@@ -16,7 +16,7 @@ import {
     ErrorMessage,
     Wrapper
 } from "@/components/Auth/Login/Login.style";
-import { LoadingIcon } from "@/components/LoadingIcon";
+import { LoadingIcon } from "@/components/ui/LoadingIcon";
 
 interface ILoginInputs {
     username: string;
