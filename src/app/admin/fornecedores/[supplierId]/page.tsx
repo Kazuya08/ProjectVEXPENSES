@@ -10,11 +10,9 @@ const getSupplier = async ({ supplierId }: { supplierId: string }) => {
     return response.data;
 }
 
-export default async function UpdateSupplierPage({ params }: { params: { supplierId: string } }) {
-    const { supplierId } = params;
+export default async function UpdateSupplierPage({ params }: any) {
+    const { supplierId } = params as { supplierId: string };;
     const supplierData = await getSupplier({ supplierId });
-
-    console.log(supplierData)
 
     if (!supplierData) {
         notFound();
